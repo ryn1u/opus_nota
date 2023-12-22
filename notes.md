@@ -40,6 +40,9 @@ Contains list of chronological events that happen within application. Events fea
 - question asked and answered
 - help requested
 
+## NOTES
+Add objectives to tasks
+
 ## MODELS:
 
 ### PROJECT (refers to a single task board)
