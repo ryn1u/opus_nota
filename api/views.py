@@ -56,6 +56,24 @@ class ListCreateTaskView(generics.ListCreateAPIView):
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED, headers=headers)
 
 
+class ListCreateTrackView(generics.ListCreateAPIView):
+    serializer_class = serializers.ListCreateTrackSerializer
+
+    def get_queryset(self):
+        project_id = self.kwargs['project_id']
+        return Track.objects.filter(project_id=project_id)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.validated_data['project_id'] = kwargs['project_id']
+
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.validated_data)
+            return Response(serializer.validated_data, status=status.HTTP_201_CREATED, headers=headers)
+
+
 class ListCreateForTrackTaskView(generics.ListCreateAPIView):
     serializer_class = serializers.ListCreateTaskSerializer
 
@@ -92,16 +110,16 @@ class UserDetailViewSet(generics.RetrieveAPIView):
     serializer_class = serializers.UserSafeReadSerializer
 
 
-class TaskDetailViewSet(generics.RetrieveAPIView):
+class TaskDetailViewSet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
     serializer_class = serializers.TaskDetailSerializer
 
 
-class TrackDetailViewSet(generics.RetrieveAPIView):
+class TrackDetailViewSet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Track.objects.all()
     serializer_class = serializers.TrackDetailSerializer
 
 
-class ObjectiveDetailViewSet(generics.RetrieveAPIView):
+class ObjectiveDetailViewSet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Objective.objects.all()
     serializer_class = serializers.ObjectiveDetailSerializer

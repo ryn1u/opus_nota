@@ -14,5 +14,6 @@ urlpatterns = [
     path('objective/<int:pk>/', views.ObjectiveDetailViewSet.as_view(), name='objective-detail'),
     path('tasks/<int:task_id>/objectives', views.ListCreateObjectiveView.as_view(), name='objective-create'),
     path('projects/<int:project_id>/tasks', views.ListCreateTaskView.as_view(), name='task-create'),
+    path('projects/<int:project_id>/tracks', views.ListCreateTrackView.as_view(), name='track-create'),
     path('tracks/<int:track_id>/tasks', views.ListCreateForTrackTaskView.as_view(), name='track-task-create'),
 ]
