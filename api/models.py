@@ -12,7 +12,7 @@ class Stage(models.IntegerChoices):
 # Create your models here.
 class Project(models.Model):
     name = models.CharField(max_length=50)
-    created_at = models.DateTimeField(db_default=Now())
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
     assigned_users = models.ManyToManyField(User, related_name="projects")
 
     def __str__(self):
@@ -21,7 +21,7 @@ class Project(models.Model):
 
 class Track(models.Model):
     name = models.CharField(max_length=30)
-    created_at = models.DateTimeField(db_default=Now())
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
     color = models.CharField(max_length=7)
     project = models.ForeignKey(Project, related_name="tracks", on_delete=models.CASCADE)
 
@@ -32,7 +32,7 @@ class Track(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=100)
     notes = models.TextField(default="", blank=True)
-    created_at = models.DateTimeField(db_default=Now(), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
     project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
     track = models.ForeignKey(Track, related_name="tasks", on_delete=models.CASCADE, blank=True, null=True)
     stage = models.IntegerField(choices=Stage, default=Stage.STARTED)
