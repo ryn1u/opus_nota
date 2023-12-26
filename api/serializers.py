@@ -28,8 +28,8 @@ class ObjectiveUrlSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):
-    assigned_users = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='user-detail') # add tracks_url
-    tracks = TrackUrlSerializer(many=True, read_only=True) # include tasks inside here
+    assigned_users = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='user-detail')
+    tracks = TrackUrlSerializer(many=True, read_only=True)
     tasks = serializers.SerializerMethodField('get_tasks_without_tracks')
     tasks_url = serializers.HyperlinkedIdentityField(view_name='task-create', lookup_url_kwarg='project_id')
     tracks_url = serializers.HyperlinkedIdentityField(view_name='track-create', lookup_url_kwarg='project_id')
